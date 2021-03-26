@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import andre.com.br.agenda.adapter.ListaAlunoAdapter;
+import andre.com.br.agenda.converter.AlunoConverter;
 import andre.com.br.agenda.dao.AlunoDAO;
 import andre.com.br.agenda.domain.Aluno;
 import andre.com.br.agenda.helper.FormularioHelper;
@@ -137,14 +139,38 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lista_alunos, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_enviar_notas:
+
+                EnviaAlunosTask task = new EnviaAlunosTask(this);
+                task.execute();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void carregaLista(){
 
-        AlunoDAO dao = new AlunoDAO(this);
-        alunos = dao.getLista();
-        dao.close();
+        alunos = PesquisaListaAlunos();
 
         ListaAlunoAdapter adapter = new ListaAlunoAdapter(this,alunos);
         listaAlunos.setAdapter(adapter);
 
+    }
+
+    private List<Aluno> PesquisaListaAlunos() {
+
+        AlunoDAO dao = new AlunoDAO(this);
+        List<Aluno> lista = dao.getLista();
+        dao.close();
+        return lista;
     }
 }

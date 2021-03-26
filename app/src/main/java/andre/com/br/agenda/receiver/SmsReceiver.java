@@ -21,16 +21,19 @@ public class SmsReceiver extends BroadcastReceiver {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             sms = SmsMessage.createFromPdu(pdu, formato);
         }
-        String telefone = sms.getDisplayOriginatingAddress();
 
-        AlunoDAO daoAluno = new AlunoDAO(context);
+        if(sms != null){
+            String telefone = sms.getDisplayOriginatingAddress();
 
-        Aluno aluno = daoAluno.getByPhone(telefone);
-        daoAluno.close();
-        if(aluno != null){
-            Toast.makeText(context, "Chegou um novo SMS do: " + aluno.getNome(), Toast.LENGTH_LONG).show();
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.msg);
-            mediaPlayer.start();
+            AlunoDAO daoAluno = new AlunoDAO(context);
+
+            Aluno aluno = daoAluno.getByPhone(telefone);
+            daoAluno.close();
+            if(aluno != null){
+                Toast.makeText(context, "Chegou um novo SMS do: " + aluno.getNome(), Toast.LENGTH_LONG).show();
+                MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.msg);
+                mediaPlayer.start();
+            }
         }
     }
 }

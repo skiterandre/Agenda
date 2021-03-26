@@ -1,0 +1,24 @@
+{
+  "list": [
+    {
+      "aluno": [
+        {
+          "id": "1",
+          "nome": "Robson",
+          "endereco": "Av Vergueiro",
+          "telefone": "11112222",
+          "site": "www.alura.com.br",
+          "nota": "4.5"
+        },
+        {
+          "id": "2",
+          "nome": "André",
+          "endereco": "Av Rebolças",
+          "telefone": "56785678",
+          "site": "www.alura.com.br",
+          "nota": "3.5"
+        }
+      ]
+    }
+  ]
+}
